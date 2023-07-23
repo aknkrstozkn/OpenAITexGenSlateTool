@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "TextureGenerator",
+	"Description": "UE5 Tool for DALL-E AI based Texture Generation",
+	"Category": "Other",
+	"CreatedBy": "AkinKursatOzkan",
+	"CreatedByURL": "https://github.com/aknkrstozkn",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "TextureGenerator",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
+}
