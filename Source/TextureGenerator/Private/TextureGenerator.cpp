@@ -1,4 +1,23 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+/*
+* Copyright (C) 2023 Akın Kürşat Özkan <akinkursatozkan@gmail.com>
+ * 
+ * This file is part of OpenAITexGenSlateTool
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the MIT License as published by
+ * the Open Source Initiative, either version 1.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MIT License for more details.
+ * 
+ * You should have received a copy of the MIT License
+ * along with this program. If not, see <https://opensource.org/licenses/MIT>.
+ *
+ * Source code on GitHub: https://github.com/aknkrstozkn/OpenAITexGenSlateTool
+ */
 
 #include "TextureGenerator.h"
 #include "HttpModule.h"
@@ -6,7 +25,6 @@
 #include "IImageWrapperModule.h"
 #include "ImageUtils.h"
 #include "TextureGeneratorSettings.h"
-#include "Widgets/Docking/SDockTab.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Text/STextBlock.h"
 #include "ToolMenus.h"
@@ -46,8 +64,10 @@ void FTextureGeneratorModule::StartupModule()
 		const FToolMenuEntry WidgetsEntry = FToolMenuEntry::InitToolBarButton(
 			TextureGeneratorName,
 			FToolUIActionChoice(FExecuteAction::CreateRaw(this, &FTextureGeneratorModule::OnSpawnWindow)),
-			LOCTEXT("TextureGenerator_Section", "Texture Generator"),
-			LOCTEXT("TextureGenerator_Tooltip", "Generate AI based Textures"));
+			LOCTEXT("TextureGenerator_Label", "Texture Generator"),
+			LOCTEXT("TextureGenerator_Tooltip", "Generate AI based Textures"),
+			FSlateIcon(FAppStyle::GetAppStyleSetName(), "Icons.TextEditor"));
+		
 		WidgetsSection.AddEntry(WidgetsEntry);
 	}));
 }
@@ -263,11 +283,21 @@ void FTextureGeneratorModule::GetImageDownloadHttpRequest(const FString& Url)
 
 void FTextureGeneratorModule::OnAPIRequestComplete(FHttpRequestPtr /*Request*/, FHttpResponsePtr Response, bool bConnectedSuccessfully)
 {
+	auto x = Response->GetContent();
+	auto y = Response->GetContentAsString();
+	auto z = Response->GetResponseCode();
 	if(!bConnectedSuccessfully || !EHttpResponseCodes::IsOk(Response->GetResponseCode()))
 	{
 		bLoadingImage = false;
 		ShowNotification("Texture Generation Failed", false);
-		UE_LOG(LogTemp, Warning, TEXT("Api request failed"));
+		if(Response->GetResponseCode() == 400)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Not enough DALL-E credits for request"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Api request failed"));
+		}
 		return;
 	}
 	
