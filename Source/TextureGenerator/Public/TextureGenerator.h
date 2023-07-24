@@ -3,28 +3,37 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Interfaces/IHttpRequest.h"
 #include "Modules/ModuleManager.h"
+#include "TextureGeneratorJsonSerializable.h"
 
-class FToolBarBuilder;
-class FMenuBuilder;
+class SMultiLineEditableTextBox;
+class SEditableTextBox;
 
 class FTextureGeneratorModule : public IModuleInterface
 {
 public:
-
-	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 	
-	/** This function will be bound to Command (by default it will bring up plugin window) */
-	void PluginButtonClicked();
-	
 private:
 
-	void RegisterMenus();
+	void OnImageDownloadComplete(FHttpRequestPtr /*Request*/, FHttpResponsePtr /*Response*/, bool /*bConnectedSuccessfully*/);
+	void OnAPIRequestComplete(FHttpRequestPtr /*Request*/, FHttpResponsePtr /*Response*/, bool /*bConnectedSuccessfully*/);
 
-	TSharedRef<class SDockTab> OnSpawnPluginTab(const class FSpawnTabArgs& SpawnTabArgs);
+	FReply OnGenerateClicked();
+	FReply OnPathClicked();
+	void OnSpawnWindow();
 
-private:
-	TSharedPtr<class FUICommandList> PluginCommands;
+	TSharedPtr<SMultiLineEditableTextBox> PromptEditableBox;
+	TSharedPtr<SEditableTextBox> TextureSizeEditableBox;
+	TSharedPtr<SEditableTextBox> TextureNameEditableBox;
+
+	bool TryCreateTextureFromPngData(const TArray<uint8>& PngData) const;
+	void PostDallEHttpRequest(const FDallEPrompt& DallEPrompt);
+	void GetImageDownloadHttpRequest(const FString& Url);
+
+	bool bLoadingImage = false;
+	FString TextureSavePath = TEXT("/Game");
+	TSharedPtr<SWindow> MainWindow;
 };
