@@ -24,7 +24,7 @@
 #include "CoreMinimal.h"
 #include "Interfaces/IHttpRequest.h"
 #include "Modules/ModuleManager.h"
-#include "..\Private\OpenAITexGenSlateToolTypes.h"
+#include "OpenAITexGenSlateToolTypes.h"
 
 class SMultiLineEditableTextBox;
 class SEditableTextBox;
