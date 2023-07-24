@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Copyright (C) 2023 Akın Kürşat Özkan <akinkursatozkan@gmail.com>
  * 
  * This file is part of OpenAITexGenSlateTool
@@ -19,40 +19,40 @@
  * Source code on GitHub: https://github.com/aknkrstozkn/OpenAITexGenSlateTool
  */
 
-using UnrealBuildTool;
+#pragma once
 
-public class TextureGenerator : ModuleRules
+#include "Serialization/JsonSerializerMacros.h"
+
+struct FDallEPrompt final : FJsonSerializable
 {
-	public TextureGenerator(ReadOnlyTargetRules Target) : base(Target)
-	{
-		OptimizeCode = CodeOptimization.Never;
-		PublicDependencyModuleNames.AddRange(
-			new string[]
-			{
-				"Core",
-			}
-		);
+	BEGIN_JSON_SERIALIZER
+		JSON_SERIALIZE("prompt", Prompt);
+		JSON_SERIALIZE("n", ImageCount);
+		JSON_SERIALIZE("size", ImageSize);
+	END_JSON_SERIALIZER
 
+	FString Prompt;
+	int32 ImageCount = 1;
+	FString ImageSize = "1024x1024";
+};
 
-		PrivateDependencyModuleNames.AddRange(
-			new string[]
-			{
-				"Projects",
-				"InputCore",
-				"EditorFramework",
-				"UnrealEd",
-				"ToolMenus",
-				"CoreUObject",
-				"Engine",
-				"Slate",
-				"SlateCore",
-				"WorkspaceMenuStructure",
-				"HTTP",
-				"Json",
-				"JsonUtilities",
-				"DeveloperSettings",
-				"AssetRegistry"
-			}
-		);
-	}
-}
+struct FURLData final : FJsonSerializable
+{
+	BEGIN_JSON_SERIALIZER
+		JSON_SERIALIZE("url", Url);
+	END_JSON_SERIALIZER
+
+	FString Url;
+};
+
+struct FDallEResponse final : FJsonSerializable
+{
+	// Example Response Format
+	// {"created": 1690130733, "data": [{"url": "..."}]}
+	
+	BEGIN_JSON_SERIALIZER
+		JSON_SERIALIZE_ARRAY_SERIALIZABLE("data", UrlArray, FURLData);
+	END_JSON_SERIALIZER
+
+	TArray<FURLData> UrlArray;
+};

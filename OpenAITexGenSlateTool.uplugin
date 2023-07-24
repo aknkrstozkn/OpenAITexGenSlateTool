@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "TextureGenerator",
+	"FriendlyName": "OpenAITexGenSlateTool",
 	"Description": "UE5 Tool for DALL-E AI based Texture Generation",
 	"Category": "Other",
 	"CreatedBy": "AkinKursatOzkan",
@@ -16,7 +16,7 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "TextureGenerator",
+			"Name": "OpenAITexGenSlateTool",
 			"Type": "Editor",
 			"LoadingPhase": "Default"
 		}

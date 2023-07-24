@@ -24,12 +24,13 @@
 #include "CoreMinimal.h"
 #include "Interfaces/IHttpRequest.h"
 #include "Modules/ModuleManager.h"
-#include "TextureGeneratorJsonSerializable.h"
+#include "..\Private\OpenAITexGenSlateToolTypes.h"
 
 class SMultiLineEditableTextBox;
 class SEditableTextBox;
+class SOpenAITexGenSlateToolWindowWidget;
 
-class FTextureGeneratorModule : public IModuleInterface
+class FOpenAITexGenSlateToolModule : public IModuleInterface
 {
 public:
 	virtual void StartupModule() override;
@@ -43,18 +44,9 @@ private:
 	void PostDallEHttpRequest(const FDallEPrompt& DallEPrompt);
 	void GetImageDownloadHttpRequest(const FString& Url);
 
-	bool bLoadingImage = false;
-	FString TextureSavePath = TEXT("/Game");
-
-	// Widget
-	FReply OnGenerateClicked();
-	FReply OnPathClicked();
-	
+	void OnGenerateClicked();
 	void OnSpawnWindow();
-	
-	TSharedPtr<SMultiLineEditableTextBox> PromptEditableBox;
-	TSharedPtr<SEditableTextBox> TextureSizeEditableBox;
-	TSharedPtr<SEditableTextBox> TextureNameEditableBox;
 
 	TSharedPtr<SWindow> MainWindow;
+	TSharedPtr<SOpenAITexGenSlateToolWindowWidget> TextureGeneratorWindowWidget;
 };

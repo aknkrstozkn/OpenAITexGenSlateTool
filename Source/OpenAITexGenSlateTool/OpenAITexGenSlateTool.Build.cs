@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Copyright (C) 2023 Akın Kürşat Özkan <akinkursatozkan@gmail.com>
  * 
  * This file is part of OpenAITexGenSlateTool
@@ -19,18 +19,40 @@
  * Source code on GitHub: https://github.com/aknkrstozkn/OpenAITexGenSlateTool
  */
 
-#pragma once
+using UnrealBuildTool;
 
-#include "CoreMinimal.h"
-#include "Engine/DeveloperSettings.h"
-#include "TextureGeneratorSettings.generated.h"
-
-UCLASS(DefaultConfig, Config = TextureGenerator)
-class TEXTUREGENERATOR_API UTextureGeneratorSettings : public UDeveloperSettings
+public class OpenAITexGenSlateTool : ModuleRules
 {
-	GENERATED_BODY()
+	public OpenAITexGenSlateTool(ReadOnlyTargetRules Target) : base(Target)
+	{
+		OptimizeCode = CodeOptimization.Never;
+		PublicDependencyModuleNames.AddRange(
+			new string[]
+			{
+				"Core",
+			}
+		);
 
-public:
-	UPROPERTY(EditAnywhere, Config, Category = TextureGenerator)
-	FString ApiKey;
-};
+
+		PrivateDependencyModuleNames.AddRange(
+			new string[]
+			{
+				"Projects",
+				"InputCore",
+				"EditorFramework",
+				"UnrealEd",
+				"ToolMenus",
+				"CoreUObject",
+				"Engine",
+				"Slate",
+				"SlateCore",
+				"WorkspaceMenuStructure",
+				"HTTP",
+				"Json",
+				"JsonUtilities",
+				"DeveloperSettings",
+				"AssetRegistry"
+			}
+		);
+	}
+}
