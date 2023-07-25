@@ -27,10 +27,10 @@ After entering the texture definition, you can generate the texture by clicking 
 
 After the loading ends, an informative notification will appear at the bottom right corner of the engine editor.
 
-If the generation is successful:
+If the generation is successful:<br />
 ![Success notification](./Screenshots/ss_texturegenerator_successnotification.png)
 
-If the generation failed:
+If the generation failed:<br />
 ![Fail notification](./Screenshots/ss_texturegenerator_failnotification.png)
 
 ### Step 6: View Log Messages (if needed)
