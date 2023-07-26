@@ -1,4 +1,4 @@
-# Unreal Engine Texture Generator via OpenAI Plugin
+# Unreal Engine OpenAI Texture Generator Plugin
 
 An OpenAI (DALL-E AI) based Texture Generation Plugin for Unreal Engine 5. Developed using the Slate UI Framework.
 
